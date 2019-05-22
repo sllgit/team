@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,7 +13,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('admin.indexx');
+        return view('admin.index');
     }
 
     /**
@@ -22,4 +23,8 @@ class IndexController extends Controller
     {
         return view('admin.login');
     }
+
+
+
+
 }

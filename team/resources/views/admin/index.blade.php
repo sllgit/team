@@ -88,7 +88,7 @@
                                     <cite>电影添加</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('电影列表','member-list.html')">
+                                <a onclick="xadmin.add_tab('电影列表','/admin/videolist')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>电影列表</cite></a>
                             </li>
@@ -101,14 +101,14 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('订单列表','order-list.html')">
+                                <a onclick="xadmin.add_tab('音乐添加','/admin/addmusic')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>订单列表</cite></a>
+                                    <cite>音乐添加</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('订单列表1','order-list1.html')">
+                                <a onclick="xadmin.add_tab('音乐列表','/admin/musiclist')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>订单列表1</cite></a>
+                                    <cite>音乐列表</cite></a>
                             </li>
                         </ul>
                     </li>
