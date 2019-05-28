@@ -32,7 +32,7 @@ class MaterialController extends Controller
      */
     public function materialupd($id)
     {
-        $data = DB::table('huifu')->where('id',$id)->first();
+        $data = Material::where('id',$id)->first();
 //        dd($data);
         return view('admin/material/mediaupd',['data'=>$data]);
     }

@@ -20,7 +20,7 @@
                     <option value="image">图片</option>
                     <option value="news">图文</option>
                     <option value="voice">语音</option>
-                    <option value="video">视频</option>
+                    {{--<option value="video">视频</option>--}}
                 </select>
             </td>
         </tr>
@@ -29,10 +29,10 @@
             <td style="display: none;" class="text all">请输入文字：<br><textarea name="content" cols="30" rows="10"></textarea></td>
         </tr>
 
-        <tr style="display: none;" class="video all">
-            <td>选择文件</td>
-            <td><input type="file" name="material" ></td>
-        </tr>
+        {{--<tr style="display: none;" class="video all">--}}
+            {{--<td>选择文件</td>--}}
+            {{--<td><input type="file" name="material" ></td>--}}
+        {{--</tr>--}}
 
         <tr style="display: none;" class="news video all">
             <td>标题</td>
@@ -42,7 +42,7 @@
             <td>简介</td>
             <td><input type="text" name="desc"></td>
         </tr>
-        <tr style="display: none;" class="news voice image all">
+        <tr style="display: none;" class="news video voice image all">
             <td><input type="file" name="material" ></td>
         </tr>
         <tr style="display: none;" class="news all">
@@ -71,13 +71,14 @@
             }else if(type == 'voice'){
                 $('.all').css('display','none');
                 $('.voice').css('display','block');
-            }else if(type == 'news'){
-                $('.all').css('display','none');
-                $('.news').css('display','block');
-            }else if(type == 'video'){
-                $('.all').css('display','none');
-                $('.video').css('display','block');
+            }else if(type == 'news') {
+                $('.all').css('display', 'none');
+                $('.news').css('display', 'block');
             }
+            // }else if(type == 'video'){
+            //     $('.all').css('display','none');
+            //     $('.video').css('display','block');
+            // }
         })
     })
 

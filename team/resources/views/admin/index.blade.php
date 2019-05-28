@@ -55,7 +55,7 @@
             </ul>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;">{{$username}}</a>
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
@@ -124,9 +124,9 @@
                                     <cite>首次关注添加</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('订单列表1','order-list1.html')">
+                                <a onclick="xadmin.add_tab('首次回复类型','/admin/settype')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>订单列表1</cite></a>
+                                    <cite>首次回复类型</cite></a>
                             </li>
                         </ul>
                     </li>
@@ -137,9 +137,9 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('多级分类','cate.html')">
+                                <a onclick="xadmin.add_tab('关注列表&群发','/admin/openidlist')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>多级分类</cite></a>
+                                    <cite>关注列表&群发</cite></a>
                             </li>
                         </ul>
                     </li>
@@ -150,9 +150,14 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('三级地区联动','city.html')">
+                                <a onclick="xadmin.add_tab('菜单添加','{{url('menu/menuadd')}}')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>三级地区联动</cite></a>
+                                    <cite>菜单添加</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('菜单列表','{{url('menu/menulist')}}')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>菜单列表</cite></a>
                             </li>
                         </ul>
                     </li>
@@ -166,35 +171,6 @@
                                 <a onclick="xadmin.add_tab('素材列表','/admin/materiallist')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>素材列表</cite></a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="管理员管理">&#xe726;</i>
-                            <cite>管理员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a onclick="xadmin.add_tab('管理员列表','admin-list.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>管理员列表</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('角色管理','admin-role.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>角色管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('权限分类','admin-cate.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>权限分类</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('权限管理','admin-rule.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>权限管理</cite></a>
                             </li>
                         </ul>
                     </li>
@@ -218,7 +194,7 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                        <iframe src='/admin/welcome' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>

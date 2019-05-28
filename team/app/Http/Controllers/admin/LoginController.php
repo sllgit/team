@@ -29,10 +29,10 @@ class LoginController extends Controller
         ];
         $res=User::where($where)->first();
         if(empty($res)){
-            return '账号或密码有误';
+            echo "<script>alert('账号或密码有误');location.href='/admin/login'</script>";
         }else{
             session(['username' => $username]);
-            return redirect('admin/index');
+            echo "<script>alert('登陆成功');location.href='/admin/index'</script>";
         }
     }
     /*

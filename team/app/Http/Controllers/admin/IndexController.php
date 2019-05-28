@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Model\Material;
+use App\Model\Openid;
+use App\Model\Openiduserinfo;
 use App\Model\Subscribe;
 use App\Wxshop\wxchat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use DB;
 class IndexController extends Controller
 {
     /**
@@ -15,7 +17,16 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $username = session('username');
+
+        return view('admin.index',compact('username'));
+    }
+    /**
+    * @content 后台首页
+    */
+    public function welcome()
+    {
+        return view('admin.welcomes');
     }
 
     /**
@@ -54,6 +65,7 @@ class IndexController extends Controller
        }else{
            $all=['type'=>$type,'content'=>$content,'create_time'=>$create_time];
        }
+//       dd($all);
         self::addMeateial($type);//添加素材
         $data = Subscribe::insert($all);
         if($data){
@@ -64,18 +76,38 @@ class IndexController extends Controller
     }
 
     /**
+     * @content 首次关注回复类型视图
+     */
+    public function settype()
+    {
+        if (\request()->Post()) {
+            $type = \request()->type;
+            $array = [
+                'responsetype'=>$type
+            ];
+            $arr = '<?php return '.var_export($array,true).'?>';
+            $path =config_path()."/wechat.php";
+            $settype = file_put_contents($path,$arr);
+            if($settype == 52 || $settype == 53){
+                echo "<script>alert('设置成功');location.href='/admin/settype'</script>";
+            }else{
+                echo "<script>alert('设置失败');location.href='/admin/settype'</script>";
+            }
+        } else {
+            $type = $type = config('wechat.responsetype');
+            return view('admin/settype', compact('type'));
+        }
+    }
+    /**
      * @return bool|mixed|string 返回 media_id
      */
     public function GetMediaId()
     {
         $file = \request()->material;
-//dd($file);
         $data = wxchat::UploadsFile($file);
         $ext = $data['ext'];//上传的类型
         $path = storage_path().$data['path'];//图片路径
-//                dd($path);
         //获取access_token  type
-//        dd(wxchat::GetAccessToken());
         $token = json_decode(wxchat::GetAccessToken(),true)['access_token'];
         //获取类型
         $type = wxchat::GetMaterialType($ext);
@@ -84,7 +116,6 @@ class IndexController extends Controller
         $url = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=$token&type=$type";
         //  CURLFile 专门为文件提交封装的类
         $data =['media'=>new \CURLFile(realpath($path))];
-//                dd($data);
         $re = wxchat::HttpPost($url,$data); //"media_id"=>"w8Ao_cMidz6xrB0ERSHM3WfnHP5DwksErmespAeINR4G41AHo0W82lUnDkEobLGm"
         return $re;
     }
@@ -121,8 +152,6 @@ class IndexController extends Controller
                 $res = Material::insert($v);
             }
         }
-        die;
-
         if($res !==false){
             return true;
         }else{
@@ -130,5 +159,39 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * @content 关注者列表
+     */
+    public function openidlist()
+    {
+//       wxchat::GetOpenIDlist();
+        $data = Openiduserinfo::get()->toArray();
+//        dd($data);
+        return view('admin/openidlist',compact('data'));
+    }
+    /**
+     * @content 关注者群发
+     */
+    public function openidsend($id)
+    {
+        $openid = explode(',',$id);
+        $content = '音乐电影在线享受';
+        $data = [
+            'touser'=>$openid,
+            'msgtype'=>'text',
+            'text'=>[
+                'content'=>$content
+            ]
+        ];
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $token = json_decode(wxchat::GetAccessToken(),true)['access_token'];
+        $url="https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=$token";
+        $res = wxchat::HttpPost($url,$data);
+        if($res['errcode'] == 0){
+            echo "<script>alert('群发成功');location.href='/admin/openidlist'</script>";
+        }else{
+            dd($res);
+        }
+    }
 
 }

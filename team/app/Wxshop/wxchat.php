@@ -2,7 +2,11 @@
 
 namespace App\Wxshop;
 
+use App\Model\Openiduserinfo;
+use App\Model\Subscribe;
+use App\Model\Video;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class wxchat extends Model
 {
@@ -138,5 +142,263 @@ class wxchat extends Model
 
     }
 
+    /**
+     * @param $fromusername 发送人
+     * @param $tousername 接收人
+     * @param $content 回复信息的内容
+     * @return string  返回文本的json数据包
+     */
+    public static function sendTextMessage($fromusername,$tousername,$content)
+    {
+        $time = time();
+        $texttpl = "<xml>
+                          <ToUserName><![CDATA[$fromusername]]></ToUserName>
+                          <FromUserName><![CDATA[$tousername]]></FromUserName>
+                          <CreateTime>$time</CreateTime>
+                          <MsgType><![CDATA[text]]></MsgType>
+                          <Content><![CDATA[$content]]></Content>
+                        </xml>";
+        return $texttpl;
+    }
+
+    /**
+     * @param $fromusername 发送人
+     * @param $tousername 接收人
+     * @return string 图片的模板
+     */
+    public static function sendImageMessage($fromusername,$tousername)
+    {
+        $res = DB::table('subscribe')->where(['type'=>'image'])->orderBy('id','desc')->first();
+        $media_id = $res->media_id;
+        $time = time();
+        $imagetpl ="<xml>
+                      <ToUserName><![CDATA[$fromusername]]></ToUserName>
+                      <FromUserName><![CDATA[$tousername]]></FromUserName>
+                      <CreateTime>$time</CreateTime>
+                      <MsgType><![CDATA[image]]></MsgType>
+                      <Image>
+                        <MediaId><![CDATA[$media_id]]></MediaId>
+                      </Image>
+                    </xml>";
+        echo $imagetpl;die;
+    }
+
+    /**
+     * @param $keywords 关键字
+     * @return mixed 电影名称
+     */
+    public static function getVideoName($keywords)
+    {
+//        echo $keywords;
+        $re = explode('电影',$keywords);
+        return $re[1];
+    }
+
+    /**
+     * @param $fromusername 发送人
+     * @param $tousername 接收人
+     * @param $data 电影的数据内容
+     * @return  返回json数据包
+     */
+    public static function GetVideoMessage($fromusername,$tousername,$videoinfo)
+    {
+        $data = [
+            'touser'=>"$fromusername",
+            'template_id'=>'UylxXC0PN49290vIrAec2HcKof6kJWkKKSkKv5KpjJU',
+            'url'=>$videoinfo->vurl,
+            'data' =>[
+                'vname'=>[
+                    'value'=>$videoinfo->vname,
+                    "color"=>"blue"
+                ],
+                'vtype'=>[
+                    'value'=>$videoinfo->vtype,
+                    "color"=>"blue"
+                ],
+                'vpeople'=>[
+                    'value'=>$videoinfo->vpeople,
+                    "color"=>"blue"
+                ],
+                'vdesc'=>[
+                    'value'=>$videoinfo->vdesc,
+                    "color"=>"blue"
+                ],
+            ]
+        ];
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        dd($data);
+        $token = json_decode(self::GetAccessToken(),true)['access_token'];
+        $url="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$token";
+        $re = self::HttpPost($url,$data);
+        return $re;
+    }
+
+    /**
+     * @param $keywords 关键字
+     * @return mixed 电影名称
+     */
+    public static function getMusicName($keywords)
+    {
+//        echo $keywords;
+        $re = explode('音乐',$keywords);
+        return $re[1];
+    }
+
+    /**
+     * @param $fromusername 发送人
+     * @param $tousername 接收人
+     * @param $data 电影的数据内容
+     * @return  返回json数据包
+     */
+    public static function GetMusicMessage($fromusername,$tousername,$musicinfo)
+    {
+        $data = [
+            'touser'=>"$fromusername",
+            'template_id'=>'WBSM1cgLHvkeW091p4WDMp_kF3nbv-KSLwZ6teFJjHY',
+            'url'=>$musicinfo->murl,
+            'data' =>[
+                'mname'=>[
+                    'value'=>$musicinfo->mname,
+                    "color"=>"blue"
+                ],
+                'mtype'=>[
+                    'value'=>$musicinfo->mtype,
+                    "color"=>"blue"
+                ],
+                'mpeople'=>[
+                    'value'=>$musicinfo->mpeople,
+                    "color"=>"blue"
+                ],
+                'mlength'=>[
+                    'value'=>$musicinfo->mlength,
+                    "color"=>"blue"
+                ],
+            ]
+        ];
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $token = json_decode(self::GetAccessToken(),true)['access_token'];
+        $url="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$token";
+        $re = self::HttpPost($url,$data);
+        return $re;
+    }
+
+    /**
+     * @param $fromusername 发送人
+     * @param $tousername 接收人
+     * @return string 语音消息模板
+     */
+    public static function sendVoiceMessage($fromusername,$tousername)
+    {
+        $res = Subscribe::where(['type'=>'voice'])->orderBy('id','desc')->first();
+        $media_id = $res->media_id;
+        $time = time();
+        $voicespl = "<xml>
+                      <ToUserName><![CDATA[$fromusername]]></ToUserName>
+                      <FromUserName><![CDATA[$tousername]]></FromUserName>
+                      <CreateTime>$time</CreateTime>
+                      <MsgType><![CDATA[voice]]></MsgType>
+                      <Voice>
+                        <MediaId><![CDATA[$media_id]]></MediaId>
+                      </Voice>
+                    </xml>";
+        echo $voicespl;die;
+    }
+
+
+    /*
+ * @content 图灵机器人
+ * */
+    /**
+     * @param $keywords 关键字
+     * @param $url url接口
+     * @return mixed 返回获得的数据的内容
+     */
+    public static function rbot($keywords,$url)
+    {
+        $data = [
+            'reqType'=>0,
+            'perception'=>[
+                'inputText'=>[
+                    'text'=>$keywords,
+                ],
+            ],
+            'userInfo'=>[
+                'apiKey'=>'459c874157374cc48b1b3944357f7947',
+                'userId'=>'tuling'
+            ]
+        ];
+        $post_data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        //初始化
+        $curl = curl_init();
+        //设置抓取的url
+        curl_setopt($curl, CURLOPT_URL, $url);
+        //设置头文件的信息作为数据流输出
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //设置post方式提交
+        curl_setopt($curl, CURLOPT_POST, 1);
+        //设置post数据
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        //执行命令
+        $data = curl_exec($curl);
+        //关闭URL请求
+        curl_close($curl);
+        //显示获得的数据
+        $data = json_decode($data,true);
+        return $data['results'][0]['values']['text'];
+    }
+
+    /**
+     * @content  获取群发消息的openid
+     * @return mixed 返回openid
+     */
+    public static function GetOpenIDlist()
+    {
+        $token = cache('token_');
+        if(!$token){
+            $token = json_decode(self::GetAccessToken(),true)['access_token'];
+            cache(['token_'=>$token],60*24);
+        }
+        $data = cache('data');
+        if(!$data) {
+            $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=$token";
+            $data = file_get_contents($url);
+            $data = json_decode($data, true);
+            cache(['data'=>$data],60*24);
+        }
+        $openid = [];
+        foreach($data['data']['openid'] as $k=>$v){
+            $open['lang'] ="zh_CN";
+            $open['openid'] =$v;
+            $openid[]=$open;
+        }
+        $openidinfo = cache('openidinfo');
+        if(!$openidinfo) {
+            //获取openid相对应的用户基本信息
+            $url = "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=$token";
+            $data = ['user_list' => $openid];
+            $data = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $openidinfo = self::HttpPost($url, $data);
+            cache(['openidinfo'=>$openidinfo],60*24);
+        }
+//            dd($openidinfo['user_info_list']);
+            $openiduserinfo = [];
+            foreach ($openidinfo['user_info_list'] as $k=>$v){
+               $info['openid'] = $v['openid'];
+               $info['nickname'] = $v['nickname'];
+               $info['sex'] = $v['sex'];
+               $info['address'] = $v['country'].$v['province'].$v['city'];
+               $info['headimgurl'] = $v['headimgurl'];
+               $info['subscribe_time'] = $v['subscribe_time'];
+                $openiduserinfo[] = $info;
+            }
+        foreach ($openiduserinfo as $k=>$v){
+            $res = Openiduserinfo::where('openid',$v['openid'])->first();
+            if(!$res){
+                Openiduserinfo::insert($openiduserinfo);
+            }
+        }
+    }
 
 }
