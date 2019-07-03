@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <script src="../jquery.js"></script>
+</head>
+<body>
+<input type="file" name="file" id="file">
+<button id="upload" onClick="upload()">上传</button>
+<script>
+    var chunksize = 10240; // 每个文件切片大小定为1kb .
+    var chunks; //切片总数
+    //发送请求
+    function upload() {
+        var blob = document.getElementById("file").files[0];//获取文件的内容
+        var start = 0;//分片开始位置
+        var end;//分片结束位置
+        var index = 0;//第几次上传
+        var filesize = blob.size;//上传的大小
+        var filename = blob.name;//上传的文件名称
+
+        //计算文件切片总数
+        chunks = Math.ceil(filesize / chunksize);
+
+        while(start < filesize) {
+            end = start + chunksize;//要上传的部分结束位置
+
+            //判断是否是最后一次上传
+            if(end > filesize) {
+                end = filesize;
+            }
+
+            //切割文件
+            var chunk = blob.slice(start,end);
+
+            //把文件名 +  第几次上传数 = 分片上传的新名称
+            var sliceIndex= blob.name + index;
+
+            var formData = new FormData();
+
+            formData.append("file", chunk,sliceIndex);
+            formData.append("names",filename);
+
+            $.ajax({
+                url: 'http://www.1810b.com/index.php?c=Index&a=upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                async:false,
+                success:function (data) {
+                    console.log(data);
+
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+            start = end;
+            index++;
+            // return;
+        }
+    }
+</script>
+</body>
+</html>

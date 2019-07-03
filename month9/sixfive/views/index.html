@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript 发起请求</title>
+    <script src="../jquery.js"></script>
+    <style type="text/css">
+        #imgs{
+            margin-top: 10px;
+        }
+        #imgs img{
+            width:150px;
+            height:150px;
+            border:1px solid #f1f1f1;
+            border-radius: 6px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!--<button>点我</button>-->
+
+    <form action="http://www.1810b.com/index.php?c=upload&a=upload" method="post" id="myform">
+        <input type="file" name="file[]" multiple="multiple" accept="image/*">
+        <button type="button">小白龙</button>
+    </form>
+
+    <div id="callback"></div>
+    <div id="imgs"></div>
+    <script>
+        $(function () {
+
+            var imgs = $('#imgs');
+            var file = $('input[type="file"]');
+
+            file.change(function (e) {
+                var fileList = this.files;
+                //预览多文件
+                for (var i=0;i<fileList.length;i++){
+                    var reader = new FileReader();
+                    reader.onload = function(evt){
+                        // console.log(evt);
+                        var src = evt.target.result;
+                        imgs.append("<img src='"+src+"'>");
+                    }
+                    reader.readAsDataURL(fileList[i]);
+                }
+                //预览单文件
+                // var reader = new FileReader();
+                // reader.onload = function(evt){
+                //     var src = evt.target.result;
+                 //     imgs.append("<img src='"+src+"'>");
+                // }
+                // reader.readAsDataURL(this.files[0]);
+            });
+            var button = $('button');
+            button.click(function (e) {
+                // var myform = $('#myform')[0];
+                // var formData = new FormData(myform);
+
+                // var xml = "<students><student><name>zhangsan</name><age>18</age></student><student><name>lisi</name><age>29</age></student></students>";
+                //
+                // parser = new DOMParser();
+                // xmlDom = parser.parseFromString(xml,'text/xml');
+                //
+                // xmls = xmlDom.getElementsByTagName;
+                //
+                //
+                // console.log(xmls);
+                //
+                // return;
+
+                $.ajax({
+                  beforeSend:function(xml){
+                      xml.setRequestHeader('x-api-token','1810b');
+                  },
+                  url: "http://www.1810b.com/index.php?c=upload&a=upload",
+                  type: "POST",
+                  processData:false,//不将数据处理成&富豪连接的字符串
+                  ContentType:false,//不设置默认的header头
+                  data: formData,
+                  async:true,
+                  success:function (res) {
+                      // json转化为对象格式
+                      //res = JSON.parse(res);
+                      // console.log(res);
+                      // 对象转化为json格式
+                      // res = JSON.stringify(res);
+                      console.log(res);
+                  },
+                  error:function (error) {
+                      console.log(error);
+                  }
+                  // complete:function () {
+                  //     alert(11);
+                  // }
+               });
+
+            });
+        })
+    </script>
+
+    <!--使用客户端与服务端来实现-->
+    <!--<script src="http://www.1810b.com/index.php/?c=text&a=js&callback=dome"></script>-->
+    <!--<script>-->
+        <!--function dome(data)-->
+         <!--{-->
+             <!--document.getElementById('callback').innerHTML = data;-->
+         <!--}-->
+    <!--</script>-->
+
+
+
+    <!--jQuery 使用 JSONP-->
+    <script>
+        $.getJSON("http://www.1810b.com/index.php/?c=text&a=js&callback=?", function(data) {
+            // console.log(data);
+            document.getElementById('callback').innerHTML = data;
+        });
+    </script>
+
+</body>
+</html>

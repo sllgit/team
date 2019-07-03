@@ -1,0 +1,67 @@
+[27-Jun-2019 16:09:08 PRC] PHP Fatal error:  Uncaught Error: Call to undefined method controllers\FontController::Student() in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 16:09:08 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 16:29:16 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 16:29:32 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 16:29:37 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 16:52:43 PRC] PHP Fatal error:  Uncaught Error: Call to undefined method Request::post() in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\StudentController.class.php:20
+Stack trace:
+#0 D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\RestfulController.class.php(16): controllers\StudentController->store()
+#1 D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php(30): controllers\RestfulController->Index()
+#2 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\StudentController.class.php on line 20
+[27-Jun-2019 16:53:40 PRC] PHP Notice:  Array to string conversion in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 16:53:40 PRC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 17:21:39 PRC] PHP Notice:  Undefined index: name in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\StudentController.class.php on line 22
+[27-Jun-2019 17:21:39 PRC] PHP Notice:  Undefined index: sex in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\StudentController.class.php on line 22
+[27-Jun-2019 17:21:39 PRC] PHP Notice:  Undefined index: age in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\controllers\StudentController.class.php on line 22
+[27-Jun-2019 17:24:16 PRC] PHP Deprecated:  Non-static method api\response::setResponseHeader() should not be called statically in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\response.class.php on line 17
+[27-Jun-2019 17:26:34 PRC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 17:26:35 PRC] PHP Deprecated:  Non-static method api\response::setResponseHeader() should not be called statically in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\response.class.php on line 17
+[27-Jun-2019 17:27:16 PRC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 17:27:16 PRC] PHP Deprecated:  Non-static method api\response::setResponseHeader() should not be called statically in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\response.class.php on line 17
+[27-Jun-2019 17:28:51 PRC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 18:32:37 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 18:43:52 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:45:08 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:45:09 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:45:52 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:46:18 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:46:21 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:46:30 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:46:36 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:46:39 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:47:09 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 42
+[27-Jun-2019 18:48:07 PRC] PHP Warning:  PDOStatement::execute(): SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 18:55:08 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 18:56:03 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 18:56:10 PRC] PHP Warning:  PDOStatement::execute() expects parameter 1 to be array, string given in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\api\Model.class.php on line 57
+[27-Jun-2019 19:44:45 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\StudentssController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 19:44:45 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30
+[27-Jun-2019 19:44:59 PRC] PHP Fatal error:  Uncaught Error: Class 'controllers\Favicon.icoController' not found in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php:30
+Stack trace:
+#0 {main}
+  thrown in D:\phpStudy\PHPTutorial\WWW\month9\sixfive\public\index.php on line 30

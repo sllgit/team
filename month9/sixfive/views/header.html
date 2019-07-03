@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ajax发送header头</title>
+    <script type="text/javascript" src="../jquery.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+
+    $.ajax({
+        beforeSend: function(xhr){
+            xhr.setRequestHeader("Authorization","Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOlsiYXVkaWVuY2VfMSIsImF1ZGllbmNlXzIiXSwiZXhwIjoxNTYxMTIyMTUxLCJpYXQiOjE1NjExMTQ5NTEsImlzcyI6InN1bmxvbmdsb25nIiwianRpIjoiMSIsIm5iZiI6MTU2MTExNDk1MSwic3ViIjoiaHR0cDpcL1wvd3d3LjE4MTBiLmNvbSIsInVzZXJfaWQiOiIxIn0.AxG7AMP6z3-y9SphdZX9w9DR_Az9noioZnQ5_FpdZwI");
+            xhr.setRequestHeader("x-api-token","123456");
+        },
+        url: "http://www.1810b.com/index.php?c=font&a=display",
+        type: "post",
+        data: {"noncestr":"L3m1vyi8ZzaPtwcDeoAl","timestamp":"1561115035","sign":"a2e07840ffca530da75cf69511d3897aefd86c57","usertoken":'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOlsiYXVkaWVuY2VfMSIsImF1ZGllbmNlXzIiXSwiZXhwIjoxNTYxMTIyMTUxLCJpYXQiOjE1NjExMTQ5NTEsImlzcyI6InN1bmxvbmdsb25nIiwianRpIjoiMSIsIm5iZiI6MTU2MTExNDk1MSwic3ViIjoiaHR0cDpcL1wvd3d3LjE4MTBiLmNvbSIsInVzZXJfaWQiOiIxIn0.AxG7AMP6z3-y9SphdZX9w9DR_Az9noioZnQ5_FpdZwI'},
+        async: true,
+        success: function(data){
+            console.log(data);
+        },
+        error: function(err){
+            console.log(err);
+        }
+    });
+
+</script>
+</body>
+</html>

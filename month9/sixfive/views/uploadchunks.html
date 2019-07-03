@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传插件 分片上传</title>
+    <script src="../jquery.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .file{
+            display: none;
+        }
+        #form{
+            padding: 20px;
+        }
+        .btn{
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border: none;
+            border-radius:4px;
+            background-color: #ea4335;
+            color: #f1f1f1;
+            cursor: pointer;
+        }
+        .btn-opt{
+            background-color: blueviolet;
+        }
+        .btn-uplaod{
+            background-color: coral;
+        }
+        #imgs{
+            width:100%;
+            min-height: 500px;
+            margin-top: 20px;
+            /*border: 1px solid #f1f1f1;*/
+            padding: 10px;
+        }
+        #imgs .li{
+            float: left;
+            padding: 10px;
+            margin-right: 10px;
+            width: 300px;
+            height: 400px;
+            position: relative;
+        }
+        #imgs .li img{
+            max-width: 300px;
+            max-height: 400px;
+            padding: 8px;
+            border:1px solid #f1f1f1;
+        }
+        /*#imgs .li img:hover{*/
+            /*background: #999;*/
+        /*}*/
+        #imgs .li i{
+            font-style: normal;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.5);
+            color: #ea4335;
+            /*添加圆角边框*/
+            border-radius: 15px;
+            font-size: 18px;
+            /*光标类型（pointer为一只手）*/
+            cursor: pointer;
+            display: none;
+        }
+         #imgs .li .tip{
+            /*绝对定位*/
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            top: 0;
+            left: 0;
+            text-align: center;
+            color: #fff;
+            display: none;
+        }
+        .clear{
+            width: 0px;
+            height: 0px;
+            /*左右均不允许浮动*/
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<form action="http://www.1810b.com/index.php?c=upload&a=upload" method="post" id="form">
+    <input type="file" name="'file" multiple="multiple" accept="image/*" class="file">
+    <input type="button" class="btn btn-opt" value="选择">
+    <input type="button" class="btn btn-uplaod" value="上传">
+    <div id="imgs">
+        <div class="clear"></div>
+    </div>
+</form>
+</body>
+<script>
+    $(function () {
+
+        //定义一个储存上传文件的对象数组
+        var uploadFiles = [];
+
+        //上传文件的下标
+        var k = 0;
+
+        //自定义一个已经上传的文件对象数组
+        var uploadedFiles = [];
+
+        //上传成功的文件个数
+        var success = 0;
+
+        // 上传失败的个数
+        var failure = 0;
+
+        //当前待上传的文件
+        var uploadNum = 0;
+
+        var opt = $('.btn-opt');
+        var upload = $('.btn-uplaod');
+        var file = $("input[type='file']");
+        var imgs = $('#imgs');
+        opt.click(function () {
+           file.click();
+        });
+        file.change(function () {
+            var fileList = this.files;
+
+            for(var i=0;i<fileList.length;i++){
+                preview(fileList[i]);
+            }
+        });
+
+        function preview(file){
+            var reader = new FileReader();
+            reader.onload = function(evt){
+                uploadNum++;
+                addPreview(evt.target.result);
+                //把该文件插入到uploadFiles数组头部
+                uploadFiles.push(file);
+
+            }
+            reader.readAsDataURL(file);
+        };
+        function addPreview(src){
+
+            var html = '<div class="li upload"><img src="' + src + '"><i>x</i><div class="tip">上传成功</div></div>';
+            //把图片追加到id=img的div中
+            imgs.append(html);
+
+        };
+        upload.click(function () {
+
+            if(uploadFiles.length < 1){
+                alert("你还没有选择文件");
+                return;
+            }
+
+            var num = uploadedFiles.length;
+            for (var i=0;i<uploadNum;i++){
+                upload(uploadedFiles[i],i,num);
+            }
+            // var myform = $('#myform')[0];
+            // var formData = new FormData(myform);
+
+
+            function upload(file,index,num) {
+                var formData = new FormData();
+                formData.append("file", file);
+
+                $.ajax({
+                    url:"http://www.1810b.com/index.php?c=upload&a=upload",
+                    method:"POST",
+                    data: formData,
+                    contentType:false,
+                    processData: false,
+                    success:function (data) {
+                        data = JSON.parse(data);
+                        if(data.code == 1008){
+                           success++;
+                           var position = num + index;
+                           var dom = imgs.children('.li').eq(position).find(".tip").show();
+                           uploadedFiles.push(uploadFiles[index]);
+                           uploadFiles.splice(index,1);
+                           uploadNum--;
+                        }else{
+                            failure++;
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error);
+                    }
+                });
+
+            }
+
+
+        });
+
+        imgs.on("mouseover",'.li',function () {
+            $(this).find('i').show();
+        });
+
+        imgs.on("mouseout",".li",function(){
+            $(this).find('i').hide();
+        });
+
+        imgs.on("click",".li i",function(){
+
+            var index = $(this).parent().index();
+            // 移除元素
+            $(this).parent().remove();
+            // 删除uploadFiles数组中文件对象
+            uploadFiles.splice(index,1);
+            k--;
+        });
+
+
+    })
+</script>
+</html>

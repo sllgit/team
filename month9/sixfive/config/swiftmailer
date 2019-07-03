@@ -1,0 +1,6 @@
+[mailer]
+server = "ssl://smtp.qq.com"
+port = "265"
+username = "1477380279@qq.com"
+password = "dqaosnuwfhfcfjfe"
+
